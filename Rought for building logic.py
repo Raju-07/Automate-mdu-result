@@ -2,28 +2,23 @@
 import random
 import os
 l = [1,2,3,4,5,6,7,8,9,10]
-list2 = []
+processed_data = []
 file_name = "example.txt"
 try:
     if os.path.exists(file_name):
         with open(file_name,"r") as file:
-            pre_data = file.read()
-            list2 = pre_data.split()
-            list2 = list(map(int,list2))
-    else:
-        with open(file_name,"w") as file:
-            pass
+            processed_data = list(map(int,file.read().split()))
 except Exception as e:
     print(f"Error is : {e}")
 finally:
-    for i in l:
-            if i in list2:
-                pass
-            else:      
-                with open(file_name,"a") as file2:
+    with open(file_name,'a') as file:
+        for i in l:
+                if i in processed_data:
+                    continue
+                else:      
                     coe = random.uniform(0,1)
                     if coe<0.2:
                         print(i/0)
                     else:
                         print(i)
-                        file2.write(str(i)+" ")
+                        file.write(str(i)+" ")
