@@ -1,3 +1,5 @@
+" Logic for Starting the loop from where it get error "
+
 import random
 import os
 l = [1,2,3,4,5,6,7,8,9,10]
