@@ -1,5 +1,4 @@
 " Logic for Starting the loop from where it get error "
-
 import random
 import os
 l = [1,2,3,4,5,6,7,8,9,10]
@@ -28,13 +27,3 @@ finally:
                     else:
                         print(i)
                         file2.write(str(i)+" ")
-
-
-
-# unique_data = [x for x in l if x not in list2] + [int(x) for x in list2 if x not in l]
-# final_data = list(set(unique_data))
-
-
-
-
-
