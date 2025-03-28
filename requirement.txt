@@ -1,0 +1,31 @@
+1. Require Tech
+        for Using the program @ReDo Automate wih selenium.py 
+        we required "selenium" and "pyautogui" in our machine
+
+        first you must have "Python Interpreter" in your machine
+
+        for installing the libraray and framework run this command into your terminal
+        👇👇👇👇 Copy this 
+        pip install pyautogui selenium             // For window
+
+        check the command for your machine
+
+2. Data Inseration
+
+        format
+        [(registration no,roll no),(registration no,roll no),(registration no,roll no)]
+
+        insert all the data is the exact format.
+
+3. Description of the project 
+
+        This Python program automates the process of fetching student result data from the MDU result portal using Selenium. It performs the following tasks:
+
+            1.Setup: Configures the Selenium WebDriver with Chrome options to suppress unnecessary logs.
+            2.Navigation: Opens the MDU result portal.
+            3.Data Input: Iterates through a list of student details (Registration No and Roll No), enters them into the respective fields on the portal, and submits the form.
+            4.Data Extraction: Extracts student information such as name, father's name, total marks, and reappear status from the result page.
+            5.Error Handling: Handles exceptions during the process and logs errors for specific students.
+            6.Output: Stores the fetched data in a list of dictionaries and displays it in a formatted manner.
+            7.Notification: Shows a success message once all data is fetched.
+            8.Cleanup: Closes the browser after completing the task.
