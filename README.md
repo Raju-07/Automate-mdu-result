@@ -16,7 +16,7 @@ This project automates the process of fetching student result data from the MDU 
 
 **Install dependencies with:**
 ```sh
-pip install openpyxl selenium
+pip install openpyxl selenium tkinter 
 ```
 
 ---
@@ -25,8 +25,7 @@ pip install openpyxl selenium
 
 1. **Clone or Download the Repository**
    ```sh
-   git clone https://github.com/yourusername/your-repo-name.git
-   cd your-repo-name/Automat-mdu-result-portal-2
+   git clone https://github.com/raju-07/Automat-mdu-result.git
    ```
 
 2. **Prepare Your Data**
@@ -34,8 +33,7 @@ pip install openpyxl selenium
    - Update the `student_details` list with tuples of your students' registration numbers and roll numbers:
      ```python
      student_details = [
-         (2312051612, 6071438),
-         (2312051613, 6071439),
+         (registration No   ,roll No  ),
          # ...add more students...
      ]
      ```
