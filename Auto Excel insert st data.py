@@ -24,7 +24,7 @@ else:
     ws.title = "sheet1"
 
 # Merging Cells for Header of the File
-ws['A1'].fill = PatternFill(start_color='c6efce',end_color='c6efce',fill_type='solid') # changing cell bg color to light green
+ws['A1'].fill = PatternFill(start_color='23272E',end_color='23272E',fill_type='solid') # changing cell bg color to light green
 ws['A1'] = "BCA-III Sem Result"
 ws['A1'].font = Font(name="Calibri",size=15,bold=True,color="006100")
 ws['A1'].alignment = Alignment(horizontal='center',vertical='center')

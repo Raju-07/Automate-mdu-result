@@ -1,222 +1,166 @@
-import time
-import pyautogui
-import webbrowser
+# Required framework and library
+from openpyxl import Workbook,load_workbook
+from openpyxl.utils import get_column_letter
+from openpyxl.styles import Font,PatternFill,Alignment
+import time,os #Inbuilt Modules
 from tkinter import messagebox as msg
-# students_detail = [(2312051470,6071607,8076954807,"rajuyadav782760@gmail.com"),(2312051471,607612,9115004409,"ritikyadav4409@gmail.com")]
-# for i in range(len(students_detail)):
-#     registration_no = students_detail[i][0]
-#     roll_no = students_detail[i][1]
-#     phone_no = students_detail[i][2]
-#     email_id = students_detail[i][3]
-#     print(f"{registration_no = }  {roll_no = }  {phone_no = }  {email_id = }")
-
-
-"Registration NO"
-2312051612      
-2312051613      
-2312051507      
-2312051461      
-2312051801      
-2312051483      
-2312051615      
-2312051542      
-2312051497      
-2312051534      
-2312051693      
-2312051646      
-2312051622      
-2312051608      
-2312051609      
-2312051538      
-2312051455      
-2312051517      
-2312051522      
-2312051775      
-2312051659      
-2312051706      
-2312051611      
-2312051674      
-2312051458      
-2312051513      
-2312051614      
-2312051533      
-2312051459      
-2312051518      
-2312051492      
-2312051656      
-2312051460      
-2312051462      
-2312051464      
-2312051525      
-2312051782      
-2312051463      
-2312051465      
-2312051676      
-2312051466      
-2312051713      
-2312051717      
-2312051552      
-2312051467      
-2312051530      
-2312051654      
-2312051502      
-2312051468      
-2312051469      
-2312051616      
-2312051779      
-2312051470      
-2312051510      
-2312051688      
-2312051617      
-2312051471      
-2312051618      
-2312051546      
-2312051776      
-2312051526      
-2312051599      
-2312051805      
-2312051621      
-2312051573      
-
-
-
-
-
-
-
-# #     time.sleep(5.0)
-# print(pyautogui.position())
-# pyautogui.scroll(-200)
-exit()
-"Optimized approach for this task "
-
-# students_detail = [(2312051470,6071607,8076954807,"rajuyadav782760@gmail.com"),(2312051471,607612,9115004409,"ritikyadav4409@gmail.com")]
-
-# for Registration_No,Roll_no,Phone_No,Email_ID in students_detail:
-#     pyautogui.write(str(Registration_No))
-    
-
-# webbrowser.open(url="https://result.mdu.ac.in/postexam/result.aspx")
-
-# "Finding the cordinate for filling the data"
-# time.sleep(5)
-# print(pyautogui.position())
-
-"Implimenting the code for adding more details "
-# more_detail = msg.askquestion("More Details","Do we need more details for Result")
-# if more_detail == "yes":
-#     print("Yes we need more details ")
-# else:
-#     print("No, We don't need any other details")
-
-# print("Hello World!")
-
-
-# print(pyautogui.position())
-
-"Write code for Copying the name of the students for saving the file uniquely"
-# time.sleep(5)
-# pyautogui.doubleClick(537,435)
-# pyautogui.hotkey('ctrl','c')
-# pyautogui.sleep(3)
-# pyautogui.hotkey('ctrl','v')
-
-
-"Using slanium for getting name here"
-# from selenium import webdriver
-
-# # Open the browser
-# driver = webdriver.edge()
-# driver.get('YOUR_WEBPAGE_URL')  # Replace with the URL of the webpage
-
-# # Find the element containing the name
-# student_name = driver.find_element('xpath', 'XPATH_OF_THE_NAME')  # Replace with the actual XPath
-# print("Student Name:", student_name.text)
-
-# # Optionally, you can copy it to the clipboard (using pyperclip or similar libraries)
-# import pyperclip
-# pyperclip.copy(student_name.text)
-# print("Copied to clipboard!")
-
-"Trying to automate the task using selenium"
+#Automate the task using selenium"
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.edge.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import time
+
+
+#initializing a file which track the of the number of row for automate excel data
+current_row = 4
+tracker_file = "row count status .txt"
+def track_row():
+    if os.path.exists(tracker_file):
+        with open(tracker_file,'r') as file:
+            row = file.readline().strip()
+    else:
+        with open(tracker_file,'w') as file:
+            file.write(str(current_row))
+        row = str(current_row)
+    return row
+
+#initializing Excel File Here
+excel_file = "Student Result Data .xlsx"
+if os.path.exists(excel_file):
+    wb = load_workbook(excel_file)
+else:
+    wb = Workbook()
+
+if "sheet1" in wb.sheetnames:
+    ws = wb['sheet1']
+else:
+    ws = wb.active
+    ws.title = "sheet1"
+#Adding Some Title and column heading
+ws.merge_cells('A1:N1')
+ws['A1'].fill = PatternFill(start_color="8DFAB1",end_color="8DFAB1",fill_type="solid")
+ws['A1'] = "BCA Result 2025 Sem - IV"
+ws['A1'].font = Font("Times New Roman",size="16",bold=True,color="006100")
+ws['A1'].alignment = Alignment(horizontal="center",vertical="center")
+
+#student cells
+ws.merge_cells("A2:E2")
+ws['A2'].fill = PatternFill(start_color="F8CBAD",end_color="F8CBAD",fill_type="solid")
+ws['A2'] = "Students Details"
+ws['A2'].font = Font("century",size=14,color="006100")
+ws['A2'].alignment = Alignment(horizontal="center",vertical="center")
+
+ws.merge_cells("G2:K2")
+ws['G2'].fill = PatternFill(start_color="F8CBAD",end_color="F8CBAD",fill_type="solid")
+ws['G2'] = "Marks in Each Subjects"
+ws['G2'].font = Font("century",size=14,color="006100")
+ws['G2'].alignment = Alignment(horizontal="center",vertical="center")
+
+ws.merge_cells("M2:N2")
+ws['M2'].fill = PatternFill(start_color="F8CBAD",end_color='F8CBAD',fill_type="solid")
+ws['M2'] = "Result"
+ws['M2'].font = Font("century",size=14,color="006100")
+ws['M2'].alignment = Alignment(horizontal="center",vertical="center")
+
+# Adding Header of the Columns Formatting
+col_head = ["Sr.No","Name","Father Name","Registration No","Roll No","","BCA206","BCA207","BCA208","BCA209","BCA210","","Total Marks","Result"]
+
+cols = 1
+for header in col_head:
+    cols_char = get_column_letter(cols)
+    ws[cols_char+str(3)] = header
+    cols += 1
+
 
 # Set up the WebDriver (Edge in this example)
-
 options = Options()
-options.add_experimental_option('excludeSwitches', ['enable-logging'])  # Suppress DevTools message
-
-
+options.add_experimental_option('excludeSwitches',['enable-logging'])  # Suppress DevTools message
 driver = webdriver.Edge(options=options)
-
-
+wait = WebDriverWait(driver,10)
 # Navigate to the result portal
 driver.get("https://result.mdu.ac.in/postexam/result.aspx")
 
-# Pause to ensure the page loads fully
-time.sleep(1)
 
-# Locate the Registration No and Roll No fields and enter the data
-driver.find_element(By.ID, "txtRegistrationNo").send_keys("2312051470")  # Replace with your Registration No
-driver.find_element(By.ID, "txtRollNo").send_keys("6071607")  # Replace with your Roll No
+#"Enter Your data Here 👇👇👇"
+#Data format (registration,Roll No)
+student_details = [(2312051612, 6071438), (2312051613, 6071439), (2312051507, 6071440), (2312051461, 6071441), (2312051801, 6071442), (2312051538, 6071568), (2312051455, 6071570), (2312051517, 6071571),(2312051470,6071607)]
+process_data = []
+file_name = "Processed_data.txt"
+#Updating Current row
+current_row = int(track_row())
 
-# Submit the form
-driver.find_element(By.ID, "cmdbtnProceed").click()
+try:
+    if os.path.exists(file_name):
+        with open(file_name,"r") as file:
+            process_data = list(map(int,file.read().split()))
 
-# Pause to let the results load
-time.sleep(3)
+except Exception as e:
+    msg.ERROR(e)
 
-driver.find_element(By.ID,"imgComfirm").click()
+finally:
+    with open(file_name,"a") as file:
+        for Registration_No,Roll_no in student_details:
+            try:
+                if Registration_No in process_data:
+                    continue
+                else:
+                    
+                    # Locate the Registration No and Roll No fields and enter the data
+                    driver.find_element(By.ID, "txtRegistrationNo").send_keys(Registration_No)  # Registration Number one by one
+                    driver.find_element(By.ID, "txtRollNo").send_keys(Roll_no)  # Roll Number one by one
+                    # Submit the form
+                    wait.until(EC.element_to_be_clickable((By.ID,"cmdbtnProceed"))).click()
+                    # driver.find_element(By.ID, "cmdbtnProceed").click()
 
-time.sleep(4)
+                    # Pause to let the results load
+                    wait.until(EC.element_to_be_clickable((By.ID,"imgComfirm"))).click()
+                    #driver.find_element(By.ID,"imgComfirm").click()
+                    
+            # Locate the element view and click on it
+                    wait.until(EC.element_to_be_clickable((By.ID,"rptMain_ctl01_lnkView"))).click()
+                    # view_link = driver.find_element(By.ID, "rptMain_ctl01_lnkView") 
+                    # view_link.click()
 
-# Optional: Locate and download the result file if available
-# For example, if the download link has an ID
+                    wait.until(EC.visibility_of_element_located((By.ID,"lblStudentName")))
 
-view_link = driver.find_element(By.ID, "rptMain_ctl01_lnkView")  # Locate the element again
-view_link.click()
+            #Extracting all the required Details from the result
+                    student_name = driver.find_element(By.ID,"lblStudentName").text
+                    father_name = driver.find_element(By.ID,"lblFatherName").text
+                    #Extracting Subjects Marks 
+                    bca201 = driver.find_element(By.XPATH,"//table//tr[2]//td[8]").text
+                    bca202 = driver.find_element(By.XPATH,"//table//tr[3]//td[8]").text
+                    bca203 = driver.find_element(By.XPATH,"//table//tr[4]//td[8]").text
+                    bca204 = driver.find_element(By.XPATH,"//table//tr[5]//td[8]").text
+                    bca205 = driver.find_element(By.XPATH,"//table//tr[6]//td[8]").text
+                    #Result
+                    total_marks = driver.find_element(By.ID,"rptMarks_ctl06_lblTotal").text
+                    result = driver.find_element(By.ID,"lblresult").text
+            # Storing data in Excel for each row
+                    data = [current_row-3,student_name,father_name,Registration_No,Roll_no,"",bca201,bca202,bca203,bca204,bca205,"",total_marks,result]
+                    for char in range(1,15):
+                        char_num = get_column_letter(char)
+                        ws[char_num+str(current_row)] = data[char-1]
+                        with open(tracker_file,"w") as file2:
+                            file2.write(str(current_row))
+                    current_row += 1
+                    
 
-# view_link = driver.find_element(By.ID, "rptMain_ctl01_lnkView").click()
+                    print(f"{student_name = }")
+                    file.write(str(Registration_No) + "\n")
+                    driver.refresh()
 
-# print("Link text:", view_link.text)  # Check if the link is located and visible
-# print("Is displayed:", view_link.is_displayed())  # Ensure the element is visible on the page
-# print("Is enabled:", view_link.is_enabled())  # Ensure the element is not disabled
-
-"Handling the click on view with pyautogui"
-# pyautogui.moveTo(1018,190)
-# pyautogui.click(1018,190)
-
-# view_link = driver.find_element(By.ID, "rptMain_ctl01_lnkView")
-# driver.execute_script("arguments[0].scrollIntoView(); arguments[0].focus();", view_link)
-# view_link.click()
-
-time.sleep(5)
-# driver.implicitly_wait(10)
-
-student_name_element = driver.find_element(By.ID,"lblStudentName")
-student_name = student_name_element.text
-print(student_name)
-time.sleep(1)
-"Code for Printing the marksheet"
-
-print_button = driver.find_element(By.ID,"btnPrint").click()
-time.sleep(1)
-pyautogui.press('enter')
-time.sleep(0.4)
-pyautogui.write(str(student_name))
-time.sleep(0.3)
-pyautogui.press('enter')
-
-driver.refresh()
-
-time.sleep(20)
-
-
-# Close the browser
-driver.quit()
-
+            except Exception as e:
+                wb.save(excel_file)
+                print(f"Error is occured In {Registration_No} and \nUnexpected Error: Please ensure good internet connect or try again")
+                msg.showerror("process Interupted",f"{e}")
+                exit()
+                    
+        wb.save(excel_file)
+#updating the last successful record row
+    with open(tracker_file,'w') as track_update:
+        track_update.write(str(current_row))
+    # Display info when process complete
+    msg.showinfo("Success","All the data fatched successfully")
+    # Close the browser
+    driver.quit()

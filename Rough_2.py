@@ -59,6 +59,11 @@ for Registration_No,Roll_no in student_details:
         #Result
         total_marks = driver.find_element(By.ID,"rptMarks_ctl06_lblTotal").text
         result = driver.find_element(By.ID,"lblresult").text
+
+        print(f"{student_name = }")
+        print(f"{father_name = }")
+        print(f"{Registration_No = }")
+        print(f"{Roll_no = }")
         
         print(f"{bca201 = }")
         print(f"{bca202 = }")

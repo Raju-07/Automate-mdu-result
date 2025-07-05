@@ -1,7 +1,7 @@
 # Required framework and library
 import time
 from tkinter import messagebox as msg
-#"Trying to automate the task using selenium"
+#Automate the task using selenium"
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.options import Options
@@ -9,14 +9,12 @@ from selenium.webdriver.edge.options import Options
 
 # Set up the WebDriver (Edge in this example)
 options = Options()
-options.add_experimental_option('excludeSwitches', ['enable-logging'])  # Suppress DevTools message
+options.add_experimental_option('excludeSwitches',['enable-logging'])  # Suppress DevTools message
 driver = webdriver.Edge(options=options)
-
 # Navigate to the result portal
 driver.get("https://result.mdu.ac.in/postexam/result.aspx")
-
+#Array to Store the data
 res_std_data = []
-
 # Pause to ensure the page loads fully
 time.sleep(1)
 
@@ -24,7 +22,6 @@ time.sleep(1)
 #Data format (registration,Roll No)
 student_details = [(2312051612, 6071438), (2312051613, 6071439), (2312051507, 6071440), (2312051461, 6071441), (2312051801, 6071442), (2312051538, 6071568), (2312051455, 6071570), (2312051517, 6071571)]
 
-# This data 👆👆 is just an example enter your data properly or take Refferance view of the requirement.txt file which is also in this Repo.
 
 for Registration_No,Roll_no in student_details:
     try:
