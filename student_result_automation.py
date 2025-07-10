@@ -3,6 +3,7 @@ from openpyxl import Workbook,load_workbook
 from openpyxl.utils import get_column_letter
 from openpyxl.styles import Font,PatternFill,Alignment
 import time,os #Inbuilt Modules
+from tkinter import filedialog
 from tkinter import messagebox as msg
 #Automate the task using selenium"
 from selenium import webdriver
@@ -11,6 +12,15 @@ from selenium.webdriver.edge.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+
+#Getting the File in which student data is stored
+filename = filedialog.askopenfilename(defaultextension=".xlsx",filetypes=[("Excel File","*.xlsx")])
+if filename:
+    input_wb = load_workbook(filename)
+    input_ws = input_wb.active
+else:
+    msg.showerror("No File","Please select a file to Proceed")
+    exit()
 
 #initializing a file which track the of the number of row for automate excel data
 current_row = 4
@@ -79,10 +89,8 @@ wait = WebDriverWait(driver,10)
 driver.get("https://result.mdu.ac.in/postexam/result.aspx")
 
 
-#"Enter Your data Here 👇👇👇"
-      #Data format (registration,Roll No)
-student_details = [(2312051470,6071607)]
-process_data = []
+
+
 file_name = "Processed_entries.txt"
 #Updating Current row
 current_row = int(track_row())
@@ -97,15 +105,16 @@ except Exception as e:
 
 finally:
     with open(file_name,"a") as file:
-        for Registration_No,Roll_no in student_details:
+        for rows in input_ws.iter_rows(min_row=2,max_col=2,values_only=True):
             try:
-                if Registration_No in process_data:
+                if rows[0] is None:
+                    break
+                elif rows[0] in process_data:
                     continue
                 else:
-                    
                     # Process of Extracting Result
-                    driver.find_element(By.ID, "txtRegistrationNo").send_keys(Registration_No)  # Registration Number one by one
-                    driver.find_element(By.ID, "txtRollNo").send_keys(Roll_no)  # Roll Number one by one
+                    driver.find_element(By.ID, "txtRegistrationNo").send_keys(rows[0])  # Registration Number one by one
+                    driver.find_element(By.ID, "txtRollNo").send_keys(rows[1])  # Roll Number one by one
                     # Submit the form
                     wait.until(EC.element_to_be_clickable((By.ID,"cmdbtnProceed"))).click()
                     wait.until(EC.element_to_be_clickable((By.ID,"imgComfirm"))).click()
@@ -124,7 +133,7 @@ finally:
                     result = driver.find_element(By.ID,"lblresult").text
             
             # Storing data in Excel for each row
-                    data = [current_row-3,student_name,father_name,Registration_No,Roll_no,"",bca201,bca202,bca203,bca204,bca205,"",total_marks,result]
+                    data = [current_row-3,student_name,father_name,rows[0],rows[1],"",bca201,bca202,bca203,bca204,bca205,"",total_marks,result]
                     for char in range(1,15):
                         char_num = get_column_letter(char)
                         ws[char_num+str(current_row)] = data[char-1]
@@ -135,12 +144,12 @@ finally:
                     #Just for Checking Current status
                     print(f"{student_name = }")
                     #Updating registraion_no in processed_entries file
-                    file.write(str(Registration_No) + "\n")
+                    file.write(str(rows[0]) + "\n")
                     driver.refresh() #Reloading website for repreating process
 
             except Exception as e:
                 wb.save(excel_file)
-                print(f"Error is occured In {Registration_No} and \nUnexpected Error: Please ensure good internet connect or try again")
+                print(f"Error is occured In {rows[0]} and \nUnexpected Error: Please ensure good internet connect or try again")
                 msg.showerror("process Interupted",f"{e}")
                 exit()
                     
