@@ -2,8 +2,10 @@ from customtkinter import *
 root = CTk()
 root.title("Entrybox")
 root.geometry("888x444")
+root.withdraw()
 
-entry = CTkEntry(master=root)
-entry.pack(pady=30,padx=40)
-
-root.mainloop()
+file_name = filedialog.asksaveasfilename(defaultextension=".xlsx",filetypes=[("Excel file","*.xlsx")],title="Save Your Workbook")
+if file_name:
+    print(file_name)
+else:
+    print(file_name)

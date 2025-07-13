@@ -5,6 +5,7 @@ from openpyxl.styles import Font,PatternFill,Alignment
 import time,os #Inbuilt Modules
 from tkinter import filedialog
 from tkinter import messagebox as msg
+from customtkinter import CTkEntry
 #Automate the task using selenium"
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -36,7 +37,7 @@ def track_row():
     return row
 
 #initializing Excel File Here
-excel_file = "student_result_data.xlsx"
+excel_file = filedialog.asksaveasfilename(defaultextension=".xlsx",filetypes=[("Excel files","*.xlsx")],title="Please Select Name & Location to save the file")
 if os.path.exists(excel_file):
     wb = load_workbook(excel_file)
 else:
@@ -87,8 +88,6 @@ driver = webdriver.Edge(options=options)
 wait = WebDriverWait(driver,10)
 # Navigate to the result portal
 driver.get("https://result.mdu.ac.in/postexam/result.aspx")
-
-
 
 
 file_name = "Processed_entries.txt"
@@ -153,7 +152,7 @@ finally:
                 msg.showerror("process Interupted",f"{e}")
                 exit()
                     
-        wb.save(excel_file)
+        wb.save(excel_file)        
 #updating the last successful record row
     with open(tracker_file,'w') as track_update:
         track_update.write(str(current_row))
